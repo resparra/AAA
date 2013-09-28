@@ -20,7 +20,7 @@ class Report(models.Model):
 	longitude = models.FloatField()
 	count = models.IntegerField(default=1)
 	email = models.EmailField()
-	photo_path = models.ImageField(upload_to="images/", blank=True, null=True)
+	photo_path = models.ImageField(upload_to="images/", blank=True, null=True, default='images/I-have-no-idea-what-I-am-doing.jpg')
 
 	def __unicode__(self):
 		return self.description

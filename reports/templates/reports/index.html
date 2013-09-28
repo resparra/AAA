@@ -1,19 +1,46 @@
 <html>
 <head>
+	<title>Home Page</title>
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 	 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 	<style type="text/css">
 		body {background-color:gray;}
 		#map { 
-			height: 500px;
-			width: 600px;
+			height: 86%;
+			width: 75%;
+		 }
+		 #banner {
+		 	height: 110px;
+		 	width: 100%;
+		 	background-color: black;
+		 }
+		 #rigtside {
+		 	width: 25%;
+		 	float: right;
+		 }
+		 #login {
+		 	text-align: center;
+		 	border: 3px solid;
+		 	border-radius: 3px;
+		 	margin: 25px;
+		 }
+		 #news {
+		 	text-align: center;
+		 	border: 3px solid;
+		 	border-radius: 3px;
+		 	margin: 25px;
+		 	height: 58%;
+		 	overflow-y: scroll;
+		 }
+		 .feed {
+		 	margin: 5px;
 		 }
 	</style>
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-			var map = L.map('map').setView([18.40358, -66.0491], 13);
+			var map = L.map('map').setView([18.15, -66.30], 9);
 
 			L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
 	    		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -21,13 +48,40 @@
 
 			 {% for x in report_list %}
 			 	var marker{{forloop.counter}} = L.marker([ {{x.latitude}} , {{x.longitude}} ]).addTo(map);
-			 	marker{{forloop.counter}}.bindPopup(" {{ x.description }} : {{x.date}} ");
+			 	marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src={{x.photo_path}} height=30 width=40 />');
 			 {% endfor %}
 		});
 
 	</script>
 </head>
 <body>
+	<div id="banner">
+		<br>
+		<img src="/images/drop_logo.png" height=80 width=110 >
+	</div>
+	<div id="rigtside">
+		<div id="login">
+			<br><br>
+			<form name="login-form" action="" method="post">
+				<input name="username" type="text" placeholder="Username" /><br><!--END USERNAME-->
+				<input name="password" type="password" placeholder="Password" /><br><!--END PASSWORD-->
+				<input type="submit" name="submit" value="Login" /><!--END Login button-->
+			</form><br>
+				<!--end login form-->
+		</div>
+		<div id="news">
+			{% for x in report_list %}
+			<div class="feed"> 
+				<h3> {{x.description}} : {{x.date}} </h3>
+					<img src="{{x.photo_path}}" height=40 width=50 alt="No Avalible" >
+				<p> {{x.status_comment}} </p>
+
+				<hr>
+			</div>
+			{% endfor %}
+		</div>
+
+	</div>
 	<div id="map"></div>
 
 </body>

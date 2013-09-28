@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from reports import views
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -16,4 +17,5 @@ urlpatterns = patterns('',
     url(r'^reports/', include('reports.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('snippets.urls')),
+    url(r'^$', views.index, name='index'),
 )
