@@ -5,8 +5,8 @@
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
 	<style type="text/css">
-		body { background-color:gray; }
-		#map { height: 86%; width: 75%; }
+		body { background-color:gray; min-width: 800px;}
+		#map { height: 84%; width: 75%; }
 		#banner { height: 110px; width: 100%; background-color: black; }
 		#rigtside { width: 25%; float: right; }
 		#news {
@@ -14,9 +14,15 @@
 		 	border: 3px solid;
 		 	border-radius: 3px;
 		 	margin: 25px;
-		 	height: 58%;
+		 	height: 65%;
 		 	overflow-y: scroll;
 		 }
+		#login {
+			float:right; 
+			font-color:white; 
+			margin-right:8%; 
+			text-align: center;
+		}
 		.widget { text-align: center; border: 3px solid; border-radius: 3px; margin: 25px; }
 		.feed { margin: 5px; }
 	</style>
@@ -29,12 +35,12 @@
 	    		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			}).addTo(map);
 
-			 {% for x in report_list %}
+			{% for x in report_list %}
 			 	var marker{{forloop.counter}} = L.marker([ {{x.latitude}} , {{x.longitude}} ]).addTo(map);
-			 	marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src={{x.photo_path}} height=100 width=120 align="middle"/>');
-			 {% endfor %}
+			 	marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src=images/{{x.photo_path}} height=100 width=120 align="middle"/>');
+			{% endfor %}
 
-			 $( "#pueblos" ).change(function () {
+			$("#pueblos").change(function () {
 			 	if ($(this).val() == "San Juan")
 			 		map.setView([18.385153,-66.062958], 12);
 			 	else if ($(this).val() == "Aibonito")
@@ -65,17 +71,15 @@
 	<div id="banner">
 		<br>
 		<img src="/images/drop_logo.png" height=80 width=110 >
-	</div>
-	<div id="rigtside">
-		<div id="login" class="widget">
-			<br><br>
+		<div id="login" >
 			<form name="login-form" action="" method="post">
 				<input name="username" type="text" placeholder="Username" /><br><!--END USERNAME-->
 				<input name="password" type="password" placeholder="Password" /><br><!--END PASSWORD-->
 				<input type="submit" name="submit" value="Login" /><!--END Login button-->
-			</form><br>
-				<!--end login form-->
+			</form>
 		</div>
+	</div>
+	<div id="rigtside">
 		<div id="views" class="widget">
 			<br>
 			VIEW POINT :
@@ -93,7 +97,7 @@
 			{% for x in report_list %}
 			<div class="feed"> 
 				<h3> {{x.description}} : {{x.date}} </h3>
-					<img src="{{x.photo_path}}" height=40 width=55 alt="No Avalible" >
+					<img src="images/{{x.photo_path}}" height=40 width=55 alt="No Avalible" >
 				<p> {{x.status_comment}} </p>
 
 				<hr>
