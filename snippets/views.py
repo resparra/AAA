@@ -25,9 +25,7 @@ def report_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def report_detail(request, pk):
-    """
-    Retrieve, update or delete a snippet instance.
-    """              
+            
     try:
         report = Report.objects.get(pk=pk)
     except Report.DoesNotExist:
