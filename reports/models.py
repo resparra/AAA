@@ -20,9 +20,17 @@ class Report(models.Model):
 	longitude = models.FloatField()
 	count = models.IntegerField(default=1)
 	email = models.EmailField()
-	photo_path = models.ImageField(upload_to="./", blank=True, null=True, default='./I-have-no-idea-what-I-am-doing.jpg')
+	photo_path = models.ImageField(upload_to="./report_photos", blank=True, null=True, default='./report_photos/drop_logo.png')
 
 	def __unicode__(self):
 		return self.description
+
+class Polygon(models.Model):
+	name = models.CharField(max_length=60)
+	polygon = models.TextField()
+
+	def __unicode__(self):
+		return self.name
+    
     
     

@@ -4,17 +4,18 @@
 	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 	<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+	<link data-require="bootstrap-css@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <link data-require="bootstrap@*" data-semver="3.0.0" rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" />
+    <script data-require="bootstrap@*" data-semver="3.0.0" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
 	<style type="text/css">
-		body { background-color:gray; min-width: 800px;}
-		#map { height: 84%; width: 75%; }
+		body { background-color:#CCC; min-width: 800px; padding-top: 50px;}
+		#map { height: 100%; width: 75%; }
 		#banner { height: 110px; width: 100%; background-color: black; }
 		#rigtside { width: 25%; float: right; }
 		#news {
 		 	text-align: center;
-		 	border: 3px solid;
-		 	border-radius: 3px;
-		 	margin: 25px;
-		 	height: 65%;
+		 	height: 70%;
 		 	overflow-y: scroll;
 		 }
 		#login {
@@ -23,8 +24,24 @@
 			margin-right:8%; 
 			text-align: center;
 		}
-		.widget { text-align: center; border: 3px solid; border-radius: 3px; margin: 25px; }
+		.widget { 
+			background-color: #AAA;
+			text-align: center;
+		 	border: 3px solid; 
+		 	border-radius: 3px; 
+		 	margin: 25px; }
 		.feed { margin: 5px; }
+		.footer {
+			text-align: right;
+  			padding-top: 16px;
+  			color: #FFFFFF;
+  			margin-right:8%;
+  			border-top: 1px solid #FFFFFF;
+		}
+		h3 {
+			text-align: center;
+		}
+		h2 { font-size: 18px; }
 	</style>
 	<script type="text/javascript">
 		
@@ -68,42 +85,51 @@
 	</script>
 </head>
 <body>
-	<div id="banner">
-		<br>
-		<img src="/images/drop_logo.png" height=80 width=110 >
-		<div id="login" >
-			<form name="login-form" action="" method="post">
-				<input name="username" type="text" placeholder="Username" /><br><!--END USERNAME-->
-				<input name="password" type="password" placeholder="Password" /><br><!--END PASSWORD-->
-				<input type="submit" name="submit" value="Login" /><!--END Login button-->
-			</form>
-		</div>
-	</div>
+	<div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href=""><img src="/images/drop_logo.png" height=20 width=20 > &nbsp;AAA Report</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <form class="navbar-form navbar-right">
+            <div class="form-group">
+              <input type="text" placeholder="Email" class="form-control">
+            </div>
+            <div class="form-group">
+              <input type="password" placeholder="Password" class="form-control">
+            </div>
+            <button type="submit" class="btn btn-success">Sign in</button>
+          </form>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </div>
+
 	<div id="rigtside">
 		<div id="views" class="widget">
-			<br>
-			VIEW POINT :
-		<select id="pueblos" name="pueblos">
-  			<option selected="selected">All</option>
- 			<option>San Juan</option> <option>Aibonito</option>
-			<option>Mayagüez</option> <option>Caguas</option>
-			<option>Ponce</option>    <option>Arecibo</option>
-			<option>Fajardo</option>  <option>Vieques</option>
-			<option>Culebra</option>
-		</select>
-		<br><br>
-		</div>
+			<h2>VIEW POINT:
+			<select id="pueblos" name="pueblos">
+  				<option selected="selected">All</option>
+ 				<option>San Juan</option> <option>Aibonito</option>
+				<option>Mayagüez</option> <option>Caguas</option>
+				<option>Ponce</option>    <option>Arecibo</option>
+				<option>Fajardo</option>  <option>Vieques</option>
+				<option>Culebra</option>
+			</select>
+		</h2>
+		</div> 
+		<h3>NEWS FEED</h3>
 		<div id="news">
 			{% for x in report_list %}
-			<div class="feed"> 
-				<h3> {{x.description}} : {{x.date}} </h3>
+			<div class="feed" style="border-top: 1px solid #000000;"> 
+				<h2> {{x.description}} : {{x.date}} </h2>
 					<img src="images/{{x.photo_path}}" height=40 width=55 alt="No Avalible" >
 				<p> {{x.status_comment}} </p>
-
-				<hr>
 			</div>
 			{% endfor %}
 		</div>
+		<div class="footer">
+        	<p>&copy; Company 2013</p>
+      	</div>
 	</div>
 	<div id="map"></div>
 

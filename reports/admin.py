@@ -1,7 +1,8 @@
 from django.contrib import admin
-from reports.models import Report
+from reports.models import Report,Polygon
 
 admin.site.register(Report)
+admin.site.register(Polygon)
 
 class ReportInline(admin.TabularInline):
 	model = Report

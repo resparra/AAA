@@ -1,8 +1,10 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from reports.models import Report
+from reports.models import Report, Polygon
 from snippets.serializers import ReportSerializer, ListSerializer
+from shapely.geometry import shape, Point
+import json
 
 
 @api_view(['GET', 'POST'])
@@ -25,9 +27,7 @@ def report_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def report_detail(request, pk):
-    """
-    Retrieve, update or delete a snippet instance.
-    """              
+            
     try:
         report = Report.objects.get(pk=pk)
     except Report.DoesNotExist:
@@ -48,6 +48,42 @@ def report_detail(request, pk):
     elif request.method == 'DELETE':
         report.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+@api_view(['GET'])
+def report_location(request, pueblo):
+    try:
+        poly = Polygon.objects.get(name=pueblo)
+    except Polygon.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if request.method == 'GET':
+        sh = shape(json.loads(poly.polygon))
+        report_list = Report.objects.all()
+        result = []
+        for point in report_list:
+            x = Point(point.latitude, point.longitude)
+            print x
+            if Point(point.latitude, point.longitude).within(sh):
+                result.append(point)
+                
+
+        serializer = ReportSerializer(result, many=True)
+        print result
+
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
