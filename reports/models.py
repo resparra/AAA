@@ -24,5 +24,13 @@ class Report(models.Model):
 
 	def __unicode__(self):
 		return self.description
+
+class Polygon(models.Model):
+	name = models.CharField(max_length=60)
+	polygon = models.TextField()
+
+	def __unicode__(self):
+		return self.name
+    
     
     

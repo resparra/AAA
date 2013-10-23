@@ -5,6 +5,7 @@ from django.conf import settings
 urlpatterns = patterns('snippets.views',
     url(r'^api/$', 'report_list'),
     url(r'^api/(?P<pk>[0-9]+)/$', 'report_detail'),
+    url(r'^api/(?P<pueblo>\w{0,50})/$', 'report_location'),
 )
 
 if settings.DEBUG:
