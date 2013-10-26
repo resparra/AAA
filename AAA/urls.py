@@ -15,10 +15,6 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^reports/', include('reports.urls')),
-<<<<<<< HEAD
-=======
-    #url(r'^grappelli/', include('grappelli.urls')),
->>>>>>> 32460bbd876a6c690e9b0e224de82f43ffd433c4
     url(r'^admin/', include(admin.site.urls)),
     url(r'^', include('snippets.urls')),
     url(r'^$', views.index, name='index'),

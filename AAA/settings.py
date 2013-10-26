@@ -137,7 +137,7 @@ INSTALLED_APPS = (
     'reports',
     'rest_framework',
     'snippets',
-    'bootstrap_toolkit',
+    'bootstrap3',
     
 )
 
