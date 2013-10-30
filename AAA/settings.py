@@ -14,6 +14,9 @@ ADMINS = (
 
 MANAGERS = ADMINS
 
+# User model for project
+AUTH_USER_MODEL = "profiles.ReportsUser"
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
@@ -55,7 +58,7 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/var/www/example.com/media/"
-MEDIA_ROOT = 'images/'
+MEDIA_ROOT = './images/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
@@ -129,6 +132,7 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'profiles',
     'suit',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
