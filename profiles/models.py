@@ -2,11 +2,7 @@
 from django.db import models
 from django.contrib.auth.models import (
 	BaseUserManager,
-<<<<<<< HEAD
-	AbastractBaseUser,
-=======
 	AbstractBaseUser,
->>>>>>> Abimael
 	PermissionsMixin)
 
 class ReportsUserManager(BaseUserManager):
@@ -37,41 +33,6 @@ class ReportsUserManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-<<<<<<< HEAD
-def create_superuser(self,email,name,last_name,password):
-	"""Creates and Saves superuser with given email,name,last_name and password"""
-
-	user= self.create_user(email,name=name,last_name=last_name,password=password)
-
-	user.is_admin = True
-	user.is_staff = True
-	user.is_superuser = True
-	user.save(using=self._db)
-	return user
-
-def create_employee(self,email,name,last_name,password):
-	"""Creates and Saves employee with given email,name,last_name and password"""
-	user = self.create_user(email,name=name,last_name=last_name,password=password)
-
-	user.is_admin = True
-	user.is_staff = True
-	user.is_superuser = False
-	user.save(using=self._db)
-	return user
-
-def create_client(self,email,name,last_name,password):
-	"""Creates and Saves client with given email,name,last_name and password"""
-	user = self.create_user(email,name=name,last_name=last_name,password=password)
-
-	user.is_admin = False
-	user.is_staff = False
-	user.is_superuser = False
-	user.save(using=self._db)
-	return user
-
-=======
-
-
 	def create_superuser(self,email,name,last_name,password):
 		"""Creates and Saves superuser with given email,name,last_name and password"""
 
@@ -85,11 +46,20 @@ def create_client(self,email,name,last_name,password):
 
 	def create_employee(self,email,name,last_name,password):
 		"""Creates and Saves employee with given email,name,last_name and password"""
+		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
-		user= self.create_user(email,name=name,last_name=last_name,password=password)
+		user.is_admin = True
+		user.is_staff = True
+		user.is_superuser = False
+		user.save(using=self._db)
+		return user
+
+	def create_client(self,email,name,last_name,password):
+		"""Creates and Saves client with given email,name,last_name and password"""
+		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
 		user.is_admin = False
-		user.is_staff = True
+		user.is_staff = False
 		user.is_superuser = False
 		user.save(using=self._db)
 		return user
@@ -129,7 +99,6 @@ class ReportsUser(AbstractBaseUser,PermissionsMixin):
 
 	def __unicode__(self):
 		return self.email
->>>>>>> Abimael
 
 
 

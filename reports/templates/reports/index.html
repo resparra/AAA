@@ -91,15 +91,23 @@
           <a class="navbar-brand" href=""><img src="/images/drop_logo.png" height=20 width=20 > &nbsp;AAA Reports</a>
         </div>
         <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right">
+        	{% if user.is_authenticated %}
+        	<form action="profiles/logout/" class="navbar-form navbar-right" method="post">
+        		{% csrf_token %}
+    			<button type="submit" class="btn btn-success">Logout</button>
+    		</form>
+			{% else %}
+            <form action="profiles/" class="navbar-form navbar-right" method="post">
+          	{% csrf_token %}
             <div class="form-group">
-              <input type="text" placeholder="Username" class="form-control">
+              <input type="text" placeholder="username" class="form-control" name="username">
             </div>
             <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
+              <input type="password" placeholder="password" class="form-control" name="password">
             </div>
             <button type="submit" class="btn btn-success">Sign in</button>
           </form>
+          {% endif %}
         </div><!--/.navbar-collapse -->
       </div>
     </div>
