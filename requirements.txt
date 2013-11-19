@@ -2,10 +2,8 @@ Django==1.5.4
 PIL==1.1.7
 Pygments==1.6
 Shapely==1.2.18
-django-bootstrap-toolkit==2.15.0
-django-bootstrap3==1.1.0
-django-pygments==0.1
+South==0.8.3
+django-bootstrap3==2.0.0
 django-suit==0.2.5
 djangorestframework==2.3.8
-numpy==1.7.1
 wsgiref==0.1.2
