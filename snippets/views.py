@@ -10,7 +10,7 @@ import json
 @api_view(['GET', 'POST'])
 def report_list(request):
     """
-    List all snippets, or create a new snippet.
+    List all reports, or create a new one.
     """
     if request.method == 'GET':
         reports = Report.objects.all()
@@ -27,7 +27,9 @@ def report_list(request):
 
 @api_view(['GET', 'PUT', 'DELETE'])
 def report_detail(request, pk):
-            
+    """
+    Specific Report Infomation
+    """       
     try:
         report = Report.objects.get(pk=pk)
     except Report.DoesNotExist:
@@ -51,6 +53,9 @@ def report_detail(request, pk):
 
 @api_view(['GET'])
 def report_location(request, pueblo):
+    """
+    List all reports within a polygon.
+    """
     try:
         poly = Polygon.objects.get(name=pueblo)
     except Polygon.DoesNotExist:
@@ -60,14 +65,13 @@ def report_location(request, pueblo):
         sh = shape(json.loads(poly.polygon))
         report_list = Report.objects.all()
         result = []
+
         for point in report_list:
-            x = Point(point.latitude, point.longitude)
-            print x
-            if Point(point.latitude, point.longitude).within(sh):
+            if Point(point.longitude,point.latitude).within(sh):
                 result.append(point)
                 
 
-        serializer = ReportSerializer(result, many=True)
+        serializer = ListSerializer(result, many=True)
         print result
 
         return Response(serializer.data)

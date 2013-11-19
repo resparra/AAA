@@ -54,7 +54,7 @@
 
 			{% for x in report_list %}
 			 	var marker{{forloop.counter}} = L.marker([ {{x.latitude}} , {{x.longitude}} ]).addTo(map);
-			 	marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src=images/{{x.photo_path}} height=100 width=120 align="middle"/>');
+			 	marker{{forloop.counter}}.bindPopup('<div style="text-align:center;">{{ x.description }} <br> {{x.date}} <br> <img src=images/{{x.photo_path}} height=100 width=120 align="middle"/></div>');
 			{% endfor %}
 
 			$("#pueblos").change(function () {
