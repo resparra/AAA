@@ -44,11 +44,21 @@ class ReportsUserManager(BaseUserManager):
 		user.save(using=self._db)
 		return user
 
-	def create_employee(self,email,name,last_name,password):
+	def create_supervisor(self,email,name,last_name,password):
 		"""Creates and Saves employee with given email,name,last_name and password"""
 		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
 		user.is_admin = True
+		user.is_staff = False
+		user.is_superuser = False
+		user.save(using=self._db)
+		return user
+
+	def create_employee(self,email,name,last_name,password):
+		"""Creates and Saves employee with given email,name,last_name and password"""
+		user = self.create_user(email,name=name,last_name=last_name,password=password)
+
+		user.is_admin = False
 		user.is_staff = True
 		user.is_superuser = False
 		user.save(using=self._db)
@@ -63,6 +73,9 @@ class ReportsUserManager(BaseUserManager):
 		user.is_superuser = False
 		user.save(using=self._db)
 		return user
+
+	def __unicode__(self):
+		return self.user
 
 USERNAME_FIELD = "email"
 REQUIRED_FIELDS = ["name","last_name"]
