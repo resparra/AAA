@@ -16,11 +16,12 @@
 					<form>
 						<select name="assign">
 							{% for e in employees %}
-							<option value="{{e.id}}">{{e.name}} {{e.last_name}}</option>
+								<option value="{{e.id}}">{{e.name}} {{e.last_name}}</option>
 							{% endfor %}
 						</select>
 					</form>
 				</div>
+				<br>
 		{% endfor %}
 	</div>
 

@@ -36,7 +36,8 @@ def supervisor_view(request):
 
 @permission_required('profiles.employee_permission')
 def employee_view(request):
-	report_list = Report.objects.all().order_by('-id')
+	user = request.user
+	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
 	context = {'report_list' : report_list }
 	return render(request, 'profiles/employee.html', context)
 
