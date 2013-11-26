@@ -16,6 +16,7 @@ MANAGERS = ADMINS
 
 # User model for project
 AUTH_USER_MODEL = "profiles.ReportsUser"
+LOGIN_REDIRECT_URL = '/'
 
 DATABASES = {
     'default': {

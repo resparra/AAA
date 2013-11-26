@@ -67,8 +67,8 @@ class ReportsUserAdmin(UserAdmin):
 	# The fields to be used in displaying the User model.
 	# These override the definitions on the base UserAdmin
 	# that reference specific fields on auth.User.
-	list_display = ("email", "is_staff", "name", "last_name")
-	list_filter = ("is_staff", "is_admin", "is_superuser", "is_active","groups")
+	list_display = ("email", "is_supervisor", "is_employee" ,"name", "last_name")
+	list_filter = ("is_employee", "is_supervisor", "is_superuser", "is_active","groups")
 	search_fields = ("email", "name", "last_name")
 	ordering = ("email",)
 	filter_horizontal = ("groups", "user_permissions",)
@@ -77,7 +77,8 @@ class ReportsUserAdmin(UserAdmin):
 		("Personal info", {"fields": ("name", "last_name",)}),
 		("Permissions", {"fields": ("is_active",
 								"is_staff",
-								"is_admin",
+								"is_employee",
+								"is_supervisor",
 								"is_superuser",
 								"groups",
 								"user_permissions")}),

@@ -1,4 +1,5 @@
 from django.db import models
+from profiles.models import ReportsUser
 
 class Report(models.Model):
 	REPORT_STATUS = (
@@ -21,6 +22,7 @@ class Report(models.Model):
 	count = models.IntegerField(default=1)
 	email = models.EmailField()
 	photo_path = models.ImageField(upload_to="./report_photos", blank=True, null=True, default='./report_photos/drop_logo.png')
+	assign_to =  models.ForeignKey(ReportsUser, blank=True, null=True, on_delete=models.SET_NULL)
 
 	def __unicode__(self):
 		return self.description

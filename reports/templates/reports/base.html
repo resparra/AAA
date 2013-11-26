@@ -9,11 +9,11 @@
 	 {% block javascript %}{% endblock %}
 	 <style type="text/css">
 			html {height: 100%;}
-			body { background-color:#CCC; min-width: 800px; padding-top: 50px; height: 100%;}	
+			body { background-color:#CCC; min-width: 800px; padding-top: 50px; height: 100%;}
 	 </style>
 
 	 {% block stylesheets %}{% endblock %}
-	<head>
+	</head>
 	<body>
 	<div class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -31,9 +31,21 @@
 		        		{% csrf_token %}
 		    			<button type="submit" class="btn btn-success">Admin</button>
 		    		</form>
-	    			{% endif %}
+	    		{% endif %}
+	    		{% if perms.profiles.supervisor_permission %}
+        			<form action="{% url 'supervisor_view' %}" class="navbar-form navbar-right" method="post">
+	        			{% csrf_token %}
+	    			<button type="submit" class="btn btn-success">Home</button>
+	    		</form>
+        		{% endif%}
+        		{% if perms.profiles.employee_permission %}
+        			<form action="{% url 'employee_view' %}" class="navbar-form navbar-right" method="post">
+	        			{% csrf_token %}
+	    			<button type="submit" class="btn btn-success">Home</button>
+	    		</form>
+        		{% endif%}
 			{% else %}
-	            <form action="profiles/" class="navbar-form navbar-right" method="post">
+	            <form action="{% url 'django.contrib.auth.views.login' %}" class="navbar-form navbar-right" method="post">
 	          	{% csrf_token %}
 	            	<div class="form-group">
 	              		<input type="text" placeholder="Username" class="form-control" name="username">

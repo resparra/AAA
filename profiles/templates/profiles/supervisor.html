@@ -7,17 +7,21 @@
  {% endblock %}
 
 {% block content %}
-		<div id="Reports">
-			<h3>REPORTS</h3>
-			{% for x in report_list %}
-			<div class="feed" style="border-top: 1px solid #000000;"> 
-				<h2> {{x.description}} : {{x.date}} </h2>
-					<img src="images/{{x.photo_path}}" height=40 width=55 alt="No Avalible" >
-				<p> {{x.status_comment}} </p>
-			</div>
-	{% endfor %}
-
-	</form>
+	<div id="Reports">
+		<h3>SUPERVISOR VIEW</h3>
+		<hr>
+		{% for x in report_list %}
+				<h3> {{x.description}} : {{x.date}} </h3>
+				<div style = "float:left;">
+					<form>
+						<select name="assign">
+							{% for e in employees %}
+							<option value="{{e.id}}">{{e.name}} {{e.last_name}}</option>
+							{% endfor %}
+						</select>
+					</form>
+				</div>
+		{% endfor %}
 	</div>
 
 {% endblock %}

@@ -38,9 +38,9 @@ class ReportsUserManager(BaseUserManager):
 
 		user= self.create_user(email,name=name,last_name=last_name,password=password)
 
-		user.is_admin = True
-		user.is_staff = True
 		user.is_superuser = True
+		user.is_supervisor = True
+		user.is_employee = True
 		user.save(using=self._db)
 		return user
 
@@ -48,9 +48,10 @@ class ReportsUserManager(BaseUserManager):
 		"""Creates and Saves employee with given email,name,last_name and password"""
 		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
-		user.is_admin = True
-		user.is_staff = False
 		user.is_superuser = False
+		user.is_supervisor = True
+		user.is_employee = False
+		user.user_permissions.add('supervisor_permission')
 		user.save(using=self._db)
 		return user
 
@@ -58,9 +59,10 @@ class ReportsUserManager(BaseUserManager):
 		"""Creates and Saves employee with given email,name,last_name and password"""
 		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
-		user.is_admin = False
-		user.is_staff = True
 		user.is_superuser = False
+		user.is_supervisor = False
+		user.is_employee = True
+		user.user_permissions.add('employee_permission')
 		user.save(using=self._db)
 		return user
 
@@ -68,8 +70,6 @@ class ReportsUserManager(BaseUserManager):
 		"""Creates and Saves client with given email,name,last_name and password"""
 		user = self.create_user(email,name=name,last_name=last_name,password=password)
 
-		user.is_admin = False
-		user.is_staff = False
 		user.is_superuser = False
 		user.save(using=self._db)
 		return user
@@ -96,8 +96,9 @@ class ReportsUser(AbstractBaseUser,PermissionsMixin):
 	REQUIRED_FIELDS = REQUIRED_FIELDS
 
 	is_active = models.BooleanField(default=True)
-	is_admin = models.BooleanField(default=False)
-	is_staff = models.BooleanField(default=False)
+	is_staff = models.BooleanField(default=True)
+	is_supervisor = models.BooleanField(default=False)
+	is_employee = models.BooleanField(default=False)
 
 	objects = ReportsUserManager()
 
@@ -112,6 +113,12 @@ class ReportsUser(AbstractBaseUser,PermissionsMixin):
 
 	def __unicode__(self):
 		return self.email
+
+	class Meta:
+		permissions = (
+			('employee_permission', 'See Employee view'),
+			('supervisor_permission', 'See Supervisor view'),
+		)
 
 
 

@@ -1,0 +1,19 @@
+{% extends "reports/base.html" %}
+
+ {% block stylesheets %}
+  	<style type="text/css">
+			#Reports{ padding: 2%; }
+	</style>
+ {% endblock %}
+
+{% block content %}
+		<div id="Reports">
+			<h3>EMPLOYEE VIEW</h3>
+			{% for x in report_list %}
+				<h2> {{x.description}} : {{x.date}} </h2>
+				<p> {{x.status_comment}} </p>
+				<hr>
+			{% endfor %}
+		</div>
+
+{% endblock %}
