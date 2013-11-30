@@ -1,11 +1,12 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-from reports.models import Report, AssignForm, ReportForm
-from django.contrib.auth.decorators import permission_required
-from django.shortcuts import render, render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from reports.models import Report
+from profiles.models import ReportsUser
 from profiles.forms import ReportsUserForm
+from django.shortcuts import render, render_to_response
+from django.contrib.auth.decorators import permission_required
 
 def index_login(request):
 	username = request.POST['username']
@@ -29,18 +30,17 @@ def logout_view(request):
 
 @permission_required('profiles.supervisor_permission')
 def supervisor_view(request):
-	form = AssignForm()
+	employees = ReportsUser.objects.filter(is_employee=True)
 	report_list = Report.objects.filter(assign_to__isnull=True).order_by('-id')
-	context = {'report_list' : report_list, 'form' : form }
+	context = {'report_list' : report_list, 'employees' : employees }
 
 	return render(request, 'profiles/supervisor.html', context)
 
 @permission_required('profiles.employee_permission')
 def employee_view(request):
 	user = request.user
-	form = ReportForm()
 	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
-	context = {'report_list' : report_list, 'form': form }
+	context = {'report_list' : report_list }
 	return render(request, 'profiles/employee.html', context)
 
 def register(request):
@@ -59,13 +59,13 @@ def register(request):
 
         # If the two forms are valid...
         if user_form.is_valid():
-                user = user_form.save()
-                user.set_password(request.POST['password'])
-                user.save()
-                registered = True
-                        # Invalid form or forms - mistakes or something else?
-                        # # Print problems to the terminal.
-                        # # They'll also be shown to the user.
+        	user = user_form.save()
+        	user.set_password(user.password)
+        	user.save()
+        	registered = True
+			# Invalid form or forms - mistakes or something else?
+			# # Print problems to the terminal.
+			# # They'll also be shown to the user.
         else:
             print user_form.errors
 

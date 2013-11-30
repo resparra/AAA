@@ -8,7 +8,7 @@
 	 {% block head %}{% endblock %}
 	 {% block javascript %}{% endblock %}
 	 <style type="text/css">
-			html {height: 100%;}
+			html { height: 100%;}
 			body { background-color:#CCC; min-width: 800px; padding-top: 50px; height: 100%;}
 	 </style>
 
@@ -25,7 +25,7 @@
 	        	<form action="{% url 'logout_view' %}" class="navbar-form navbar-right" method="post">
 	        		{% csrf_token %}
 	    			<button type="submit" class="btn btn-danger">Logout</button>
-	    			Welcome, {{ user.name }}
+	    			<font color="white"> &nbsp; Welcome, {{ user.name }}</font>
 	    		</form>
 	    		{% if user.is_superuser %}
 		        	<form action="{% url 'admin:index' %}" class="navbar-form navbar-right" method="post">

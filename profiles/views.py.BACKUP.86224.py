@@ -1,11 +1,17 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseRedirect
-from reports.models import Report, AssignForm, ReportForm
-from django.contrib.auth.decorators import permission_required
-from django.shortcuts import render, render_to_response
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+<<<<<<< HEAD
+from reports.models import Report, AssignForm, ReportForm
+from django.shortcuts import render
+=======
+from reports.models import Report
+from profiles.models import ReportsUser
 from profiles.forms import ReportsUserForm
+from django.shortcuts import render, render_to_response
+>>>>>>> 27cc6af234f8f301c08dfe5a90d6a8979c11a7ac
+from django.contrib.auth.decorators import permission_required
 
 def index_login(request):
 	username = request.POST['username']
@@ -59,13 +65,13 @@ def register(request):
 
         # If the two forms are valid...
         if user_form.is_valid():
-                user = user_form.save()
-                user.set_password(request.POST['password'])
-                user.save()
-                registered = True
-                        # Invalid form or forms - mistakes or something else?
-                        # # Print problems to the terminal.
-                        # # They'll also be shown to the user.
+        	user = user_form.save()
+        	user.set_password(user.password)
+        	user.save()
+        	registered = True
+			# Invalid form or forms - mistakes or something else?
+			# # Print problems to the terminal.
+			# # They'll also be shown to the user.
         else:
             print user_form.errors
 

@@ -27,7 +27,6 @@
         <strong>Thank you for registering!</strong>
         <a href="/reports/">Return to the homepage.</a><br />
         {% else %}
-        AAA says: <strong>register here!</strong><br />
 
         <form id="user_form" method="post" action="/profiles/register/"
                 enctype="multipart/form-data" class="form">
@@ -41,7 +40,7 @@
                  making everything look neater. -->
 
             <!-- Provide a button to click to submit the form. -->
-            <input type="submit" name="submit" value="Register" />
+            <button type="submit" class="btn btn-success"> Register </button>
         </form>
         {% endif %}
     </body>
