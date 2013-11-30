@@ -41,6 +41,7 @@ class ReportsUserManager(BaseUserManager):
 		user.is_superuser = True
 		user.is_supervisor = True
 		user.is_employee = True
+		user.is_staff = True
 		user.save(using=self._db)
 		return user
 
@@ -96,7 +97,7 @@ class ReportsUser(AbstractBaseUser,PermissionsMixin):
 	REQUIRED_FIELDS = REQUIRED_FIELDS
 
 	is_active = models.BooleanField(default=True)
-	is_staff = models.BooleanField(default=True)
+	is_staff = models.BooleanField(default=False)
 	is_supervisor = models.BooleanField(default=False)
 	is_employee = models.BooleanField(default=False)
 

@@ -2,7 +2,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from reports.models import Report, AssignForm, ReportForm
-from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 
 def index_login(request):
@@ -36,7 +35,6 @@ def supervisor_view(request):
 @permission_required('profiles.employee_permission')
 def employee_view(request):
 	user = request.user
-	form = ReportForm()
 	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
 	context = {'report_list' : report_list, 'form': form }
 	return render(request, 'profiles/employee.html', context)

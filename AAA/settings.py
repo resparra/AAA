@@ -3,7 +3,7 @@ from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 # Django settings for AAA project.
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-TEMPLATES_DIR = os.path.join(PROJECT_PATH, 'templates')
+TEMPLATES_PATH = os.path.join(PROJECT_PATH, 'templates')
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -118,7 +118,7 @@ ROOT_URLCONF = 'AAA.urls'
 WSGI_APPLICATION = 'AAA.wsgi.application'
 
 TEMPLATE_DIRS = (
-    #TEMPLATES_DIR ,
+    TEMPLATES_PATH ,
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
