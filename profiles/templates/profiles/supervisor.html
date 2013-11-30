@@ -1,4 +1,7 @@
 {% extends "reports/base.html" %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
  {% block stylesheets %}
   	<style type="text/css">
@@ -8,20 +11,18 @@
 
 {% block content %}
 	<div id="Reports">
-		<h3>SUPERVISOR VIEW</h3>
+		<h3>SUPERVISOR : {{ user.name }} {{ user.last_name }}</h3>
 		<hr>
 		{% for x in report_list %}
 				<h3> {{x.description}} : {{x.date}} </h3>
-				<div style = "float:left;">
-					<form>
-						<select name="assign">
-							{% for e in employees %}
-								<option value="{{e.id}}">{{e.name}} {{e.last_name}}</option>
-							{% endfor %}
-						</select>
+				<div style="width:300px;">
+					<form method="post">
+						<input type='hidden' name="id" value="{{ x.id }}" />
+						{% bootstrap_form form layout="inline" %}
+           			     <button type="submit" class="btn btn-success">Assign</button>
 					</form>
 				</div>
-				<br>
+				<hr>
 		{% endfor %}
 	</div>
 

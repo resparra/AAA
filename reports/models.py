@@ -1,5 +1,6 @@
 from django.db import models
 from profiles.models import ReportsUser
+from django import forms
 
 class Report(models.Model):
 	REPORT_STATUS = (
@@ -34,5 +35,10 @@ class Polygon(models.Model):
 	def __unicode__(self):
 		return self.name
     
-    
-    
+class AssignForm(forms.Form):
+    Assign_to = forms.ModelChoiceField(queryset=ReportsUser.objects.filter(is_employee=True))
+
+class ReportForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['status', 'status_comment']

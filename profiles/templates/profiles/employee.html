@@ -1,19 +1,29 @@
 {% extends "reports/base.html" %}
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
 
- {% block stylesheets %}
+{% block stylesheets %}
   	<style type="text/css">
 			#Reports{ padding: 2%; }
 	</style>
- {% endblock %}
+{% endblock %}
 
 {% block content %}
 		<div id="Reports">
-			<h3>EMPLOYEE VIEW</h3>
+			<h3>{{ user.name }} {{user.last_name}}</h3>
+			<hr>
 			{% for x in report_list %}
-				<h2> {{x.description}} : {{x.date}} </h2>
+			<div style="width:500px;">
+				<h3> {{x.description}} : {{x.date}} </h3>
 				<p> {{x.status_comment}} </p>
-				<hr>
+				<form method="post">
+					<input type='hidden' name="id" value="{{ x.id }}" />
+					{% bootstrap_form form %}
+					<button type="submit" class="btn btn-success">Assign</button>
+				</form>
+				<hr>	
+			</div>			
 			{% endfor %}
-		</div>
-
+		</div>  
 {% endblock %}

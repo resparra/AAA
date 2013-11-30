@@ -1,8 +1,7 @@
 # Create your views here.
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
-from reports.models import Report
-from profiles.models import ReportsUser
+from reports.models import Report, AssignForm, ReportForm
 from django.shortcuts import render
 from django.contrib.auth.decorators import permission_required
 
@@ -28,17 +27,18 @@ def logout_view(request):
 
 @permission_required('profiles.supervisor_permission')
 def supervisor_view(request):
-	employees = ReportsUser.objects.filter(is_employee=True)
+	form = AssignForm()
 	report_list = Report.objects.filter(assign_to__isnull=True).order_by('-id')
-	context = {'report_list' : report_list, 'employees' : employees }
+	context = {'report_list' : report_list, 'form' : form }
 
 	return render(request, 'profiles/supervisor.html', context)
 
 @permission_required('profiles.employee_permission')
 def employee_view(request):
 	user = request.user
+	form = ReportForm()
 	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
-	context = {'report_list' : report_list }
+	context = {'report_list' : report_list, 'form': form }
 	return render(request, 'profiles/employee.html', context)
 
 
