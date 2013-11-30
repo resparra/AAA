@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from reports.models import Report
-from profiles.models import ReportsUser, ReportsUserManager
+from profiles.models import ReportsUser
 from profiles.forms import ReportsUserForm
 from django.shortcuts import render, render_to_response
 from django.contrib.auth.decorators import permission_required
