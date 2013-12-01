@@ -5,7 +5,8 @@ from reports.models import Report, AssignForm, ReportForm
 from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
-from profiles.forms import ReportsUserForm
+from profiles.forms import ReportsUserForm, ReportsUser
+from datetime import datetime 
 
 def index_login(request):
 	username = request.POST['username']
@@ -29,6 +30,14 @@ def logout_view(request):
 
 @permission_required('profiles.supervisor_permission')
 def supervisor_view(request):
+	if request.method == 'POST':
+		form = ReportForm(request.POST)
+		report = Report.objects.get(pk=form.data['id'])
+		report.assign_to = ReportsUser.objects.get(pk=form.data['Assign_to'])
+		print report
+		report.save()
+
+
 	form = AssignForm()
 	report_list = Report.objects.filter(assign_to__isnull=True).order_by('-id')
 	context = {'report_list' : report_list, 'form' : form }
@@ -37,14 +46,30 @@ def supervisor_view(request):
 
 @permission_required('profiles.employee_permission')
 def employee_view(request):
+	error = False
+	if request.method == 'POST':
+		form = ReportForm(request.POST)
+		if not form.data['status'] == "" and not form.data['status_comment'] == "":
+			report = Report.objects.get(pk=form.data['id'])
+			report.status = form.data['status']
+			report.status_comment = form.data['status_comment']+" ("+str(datetime.now().date())+")" 
+			report.save()
+		else:
+			error = True
+
 	user = request.user
 	form = ReportForm()
 	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
-	context = {'report_list' : report_list, 'form': form }
+	report_completed = report_list.filter(status='C')
+	print report_completed
+	if error:
+		context = {'report_list' : report_list, 'form': form, 'error': error }
+	else:
+		context = {'report_list' : report_list, 'form': form }
+
 	return render(request, 'profiles/employee.html', context)
 
 def register(request):
-    # Like before, get the request's context.
     context = RequestContext(request)
 
     # A boolean value for telling the template whether the registration was successful.

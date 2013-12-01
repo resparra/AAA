@@ -22,28 +22,16 @@
         </div>
         <div class="navbar-collapse collapse">
         	{% if user.is_authenticated %}
-	        	<form action="{% url 'logout_view' %}" class="navbar-form navbar-right" method="post">
-	        		{% csrf_token %}
-	    			<button type="submit" class="btn btn-danger">Logout</button>
-	    			<font color="white"> &nbsp; Welcome, {{ user.name }}</font>
-	    		</form>
+	    			<a href="{% url 'logout_view' %}" class="navbar-form navbar-right btn btn-danger">Logout</a>
+	    			<font color="white" class="navbar-form navbar-right"> &nbsp; Welcome, {{ user.name }}</font>
 	    		{% if user.is_superuser %}
-		        	<form action="{% url 'admin:index' %}" class="navbar-form navbar-right" method="post">
-		        		{% csrf_token %}
-		    			<button type="submit" class="btn btn-warning">Admin Home</button>
-		    		</form>
+	    			<a href="{% url 'admin:index' %}" class="navbar-form navbar-right btn btn-danger">Admin Home</a>
 	    		{% endif %}
 	    		{% if perms.profiles.supervisor_permission %}
-        			<form action="{% url 'supervisor_view' %}" class="navbar-form navbar-right" method="post">
-	        			{% csrf_token %}
-	    			<button type="submit" class="btn btn-primary">Supervisor Home</button>
-	    		</form>
+	    			<a href="{% url 'supervisor_view' %}" class="navbar-form navbar-right btn btn-danger">Supervisor Home</a>
         		{% endif%}
         		{% if perms.profiles.employee_permission %}
-        			<form action="{% url 'employee_view' %}" class="navbar-form navbar-right" method="post">
-	        			{% csrf_token %}
-	    			<button type="submit" class="btn btn-success">Employee Home</button>
-	    		</form>
+        			<a href="{% url 'employee_view' %}" class="navbar-form navbar-right btn btn-danger">Employee Home</a>
         		{% endif%}
 			{% else %}
 			<div class= "navbar-right" >

@@ -10,17 +10,21 @@
 {% endblock %}
 
 {% block content %}
+		{% if error %}
+			<p> Error : Blank Field </p>
+		{% endif %}
 		<div id="Reports">
 			<h3>{{ user.name }} {{user.last_name}}</h3>
 			<hr>
 			{% for x in report_list %}
 			<div style="width:500px;">
 				<h3> {{x.description}} : {{x.date}} </h3>
-				<p> {{x.status_comment}} </p>
+				<p>{{x.status}}  : {{x.status_comment}} </p>
 				<form method="post">
+					{% csrf_token %}
 					<input type='hidden' name="id" value="{{ x.id }}" />
 					{% bootstrap_form form %}
-					<button type="submit" class="btn btn-success">Assign</button>
+					<button type="submit" class="btn btn-success">Submit Change</button>
 				</form>
 				<hr>	
 			</div>			

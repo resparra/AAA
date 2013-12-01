@@ -17,6 +17,7 @@
 				<h3> {{x.description}} : {{x.date}} </h3>
 				<div style="width:300px;">
 					<form method="post">
+						{% csrf_token %}
 						<input type='hidden' name="id" value="{{ x.id }}" />
 						{% bootstrap_form form layout="inline" %}
            			     <button type="submit" class="btn btn-success">Assign</button>

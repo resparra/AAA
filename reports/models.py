@@ -1,6 +1,7 @@
 from django.db import models
 from profiles.models import ReportsUser
 from django import forms
+from datetime import datetime 
 
 class Report(models.Model):
 	REPORT_STATUS = (
@@ -14,7 +15,7 @@ class Report(models.Model):
 		('E', 'Otros')
 		)
 	description = models.CharField(max_length=60)
-	date = models.DateField(auto_now=True)
+	date = models.DateField(default=datetime.now)
 	rep_type = models.CharField(max_length=1, choices= REPORT_TYPES)
 	status = models.CharField(max_length=1, choices= REPORT_STATUS)
 	status_comment = models.CharField(max_length=60)
