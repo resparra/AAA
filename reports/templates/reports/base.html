@@ -25,7 +25,7 @@
 	    			<a href="{% url 'logout_view' %}" class="navbar-form navbar-right btn btn-danger">Logout</a>
 	    			<font color="white" class="navbar-form navbar-right"> &nbsp; Welcome, {{ user.name }}</font>
 	    		{% if user.is_superuser %}
-	    			<a href="{% url 'admin:index' %}" class="navbar-form navbar-right btn btn-danger">Admin Home</a>
+	    		<a href="{% url 'admin:index' %}" class="navbar-form navbar-right btn btn-danger">Admin Home</a>
 	    		{% endif %}
 	    		{% if perms.profiles.supervisor_permission %}
 	    			<a href="{% url 'supervisor_view' %}" class="navbar-form navbar-right btn btn-danger">Supervisor Home</a>
