@@ -5,7 +5,8 @@ from reports.models import Report, Polygon
 from snippets.serializers import ReportSerializer, ListSerializer
 from shapely.geometry import shape, Point
 import json
-
+import urllib2
+from django.http import HttpResponse
 
 @api_view(['GET', 'POST'])
 def report_list(request):
@@ -72,6 +73,11 @@ def report_location(request, pueblo):
         print result
 
         return Response(serializer.data)
+
+def mobile_news(request):
+    f = urllib2.urlopen('http://136.145.188.28:8000/api/?format=json')
+    data = f.read()
+    return HttpResponse('{ "News": ' + data + "}")
 
 
 

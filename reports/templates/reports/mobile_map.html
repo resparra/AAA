@@ -1,0 +1,45 @@
+<html>
+<head>
+   <title>Leaflet Fullscreen Example</title>
+   
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		
+   <style>
+   html, body, #map {
+      height:100%;
+      width:100%;
+      padding:0px;
+      margin:0px;
+   } 
+   </style>
+   
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+		<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+   
+   <script language="javascript">
+      function init() {
+         var map = new L.Map('map').setView([18.15, -66.30], 7);                       
+              
+      	 L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="http://openstreetmap.org">OpenStreetMap</a> contributors',
+            maxZoom: 18
+         }).addTo(map);
+         map.attributionControl.setPrefix(''); // Don't show the 'Powered by Leaflet' text.
+
+         {% for x in report_list %}
+			var marker{{forloop.counter}} = L.marker([ {{x.latitude}} , {{x.longitude}} ]).addTo(map);
+			marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src=images/{{x.photo_path}} height=100 width=120 align="middle"/>');
+		{% endfor %}
+
+      }
+   </script>
+   
+</head>
+<body onLoad="javascript:init();">
+   <div id="map"></div>
+   
+</body>                                                                                                                          
+</html>
+    

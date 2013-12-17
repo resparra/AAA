@@ -7,3 +7,9 @@ def index(request):
 	context = {'report_list' : report_list }
 
 	return render(request, 'reports/index.html', context)
+
+def map_list(request):
+	report_list = Report.objects.all().order_by('-id')
+	context = {'report_list' : report_list }
+
+	return render(request, 'reports/mobile_map.html', context)
