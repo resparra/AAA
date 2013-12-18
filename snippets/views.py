@@ -75,7 +75,7 @@ def report_location(request, pueblo):
         return Response(serializer.data)
 
 def mobile_news(request):
-    f = urllib2.urlopen('http://136.145.188.28:8000/api/?format=json')
+    f = urllib2.urlopen('http://136.145.188.31:8000/api/?format=json')
     data = f.read()
     return HttpResponse('{ "News": ' + data + "}")
 

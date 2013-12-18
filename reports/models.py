@@ -23,7 +23,7 @@ class Report(models.Model):
 	longitude = models.FloatField()
 	count = models.IntegerField(default=1)
 	email = models.EmailField()
-	photo_path = models.ImageField(upload_to="./report_photos", blank=True, null=True, default='./report_photos/drop_logo.png')
+	photo_path = models.ImageField(upload_to="./report_photos", blank=True, null=True, default='./report_photos/drop_logo.png', verbose_name="Upload Foto")
 	assign_to =  models.ForeignKey(ReportsUser, blank=True, null=True, on_delete=models.SET_NULL)
 
 	def __unicode__(self):
@@ -43,3 +43,8 @@ class ReportForm(forms.ModelForm):
     class Meta:
         model = Report
         fields = ['status', 'status_comment']
+
+class ReportCreateForm(forms.ModelForm):
+    class Meta:
+        model = Report
+        fields = ['description','rep_type','latitude','longitude','email', 'photo_path',]

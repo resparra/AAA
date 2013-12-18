@@ -17,7 +17,15 @@ class ReportSerializer(serializers.ModelSerializer):
             return ""
 
 class ListSerializer(serializers.ModelSerializer):
+    photo_path = serializers.SerializerMethodField('get_file_url')
     class Meta:
         model = Report
-        fields = ('id','description', 'date', 'rep_type', 'status', 'latitude', 'longitude')
+        fields = ('id','description', 'date', 'rep_type', 'status', 'latitude', 'longitude', 'status_comment', 'photo_path')
+
+    def get_file_url(self, obj):
+        if obj.photo_path :
+            return obj.photo_path.url
+        else :
+            return ""
+
 

@@ -1,0 +1,138 @@
+{% extends "reports/base.html" %}
+	{% block head %}
+		<title>Home Page</title>
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.css" />
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.js"></script>
+		<script data-require="jquery@*" data-semver="2.0.3" src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+	{% endblock %}
+
+	{% load bootstrap3 %}
+	{% bootstrap_css %}
+
+    {% block stylesheets %}
+		<style type="text/css">
+			html {height: 100%;}
+			body { background-color:#CCC; min-width: 800px; padding-top: 50px; height: 100%;}
+			#leaflet_map { height: 100%; width: 75%; }
+			#content { height: 100%; width: 100%; }
+			#banner { height: 110px; width: 100%; background-color: black; }
+			#rigtside { width: 25%; float: right; height: 100%; }
+			#news {
+			 	text-align: center;
+			 	height: 70%;
+			 	overflow-y: scroll;
+			 	margin: 15px;
+			 }
+			#login {
+				float:right; 
+				font-color:white; 
+				margin-right:8%; 
+				text-align: center;
+			}
+			.widget { 
+				background-color: #AAA;
+				text-align: center;
+			 	border: 3px solid; 
+			 	border-radius: 3px; 
+			 	margin: 25px; 
+			 	height: 65px;
+			 	width: 80%; 
+			 }
+			.feed { margin: 5px; }
+			.footer {
+				text-align: right;
+	  			padding-top: 16px;
+	  			color: #FFFFFF;
+	  			margin-right:8%;
+	  			border-top: 1px solid #FFFFFF;
+			}
+			h3 {
+				text-align: center;
+			}
+			h2 { font-size: 18px; }
+		</style>
+	{% endblock %}
+
+	 {% block javascript %}
+		<script type="text/javascript">
+			
+			$(document).ready(function() {
+				var map = L.map('leaflet_map').setView([18.15, -66.30], 9);
+
+				L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		    		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+				}).addTo(map);
+
+				{% for x in report_list %}
+				 	var marker{{forloop.counter}} = L.marker([ {{x.latitude}} , {{x.longitude}} ]).addTo(map);
+				 	marker{{forloop.counter}}.bindPopup('{{ x.description }} : {{x.date}} <br> <img src=../../images/{{x.photo_path}} height=100 width=120 align="middle"/>');
+				{% endfor %}
+
+
+				$("#pueblos").change(function () {
+				 	if ($(this).val() == "San Juan")
+				 		map.setView([18.385153,-66.062958], 12);
+				 	else if ($(this).val() == "Aibonito")
+				 		map.setView([18.140142,-66.266455], 13);
+					else if ($(this).val() == "Mayagüez")
+				 		map.setView([18.198044,-67.128235], 13);
+				 	else if ($(this).val() == "Caguas")
+				 		map.setView([18.234895,-66.045052], 13);
+				 	else if ($(this).val() == "Ponce")
+				 		map.setView([18.008121,-66.608841], 13);
+				 	else if ($(this).val() == "Vieques")
+				 		map.setView([18.126602,-65.441147], 12);
+				 	else if ($(this).val() == "Culebra")
+				 		map.setView([18.317374,-65.287682], 13);
+				 	else if ($(this).val() == "Fajardo")
+				 		map.setView([18.326174,-65.652607], 13);
+				 	else if ($(this).val() == "Arecibo")
+				 		map.setView([18.464793,-66.716393], 13);
+				 	else
+				 		map.setView([18.15, -66.30], 9);
+				 });
+
+			function onMapClick (e){
+				$('input[name="latitude"]').val(e.latlng.lat.toString());
+				$('input[name="longitude"]').val(e.latlng.lng.toString());
+
+			}
+
+			map.on('click', onMapClick);
+
+			});
+
+		</script>
+
+	{% endblock %}
+
+	{% block content %} 
+
+	<div id="rigtside">
+		<div id="views" class="widget">
+			<h2>VIEW POINT:
+			<select id="pueblos" name="pueblos">
+  				<option selected="selected">All</option>
+ 				<option>San Juan</option> <option>Aibonito</option>
+				<option>Mayagüez</option> <option>Caguas</option>
+				<option>Ponce</option>    <option>Arecibo</option>
+				<option>Fajardo</option>  <option>Vieques</option>
+				<option>Culebra</option>
+			</select>
+		</h2>
+		</div> 
+		<div id="news">
+			<h2> Create Report </h2><br>
+			<form enctype="multipart/form-data" method="post">
+            	{% csrf_token %}
+            	{% bootstrap_form form layout="inline"%}
+            	<input type='hidden' name="status" value="R" />
+            	<input type='hidden' name="status_comment" value="Reported" />
+           		<br> <button type="submit" class="btn btn-success"> Submit </button>
+        	</form>
+		</div>
+	</div>
+	<div id="leaflet_map"></div>
+
+	{% endblock %}
