@@ -102,7 +102,7 @@ def register(request):
                         # # They'll also be shown to the user.
                         # 
                 # send mail
-                send_mail('Thanks for your registration ', '%s,\n Thanks for registering in AAA reports application '%user.name ,'aaa.reports.news@gmail.com',
+                send_mail('Thanks for your registration ', user.name + ',\n Thanks for registering in AAA reports application' ,'aaa.reports.news@gmail.com',
     			[user.email], fail_silently=False)
         else:
             print user_form.errors
