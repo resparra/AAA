@@ -1,13 +1,18 @@
-<!DOCTYPE html>
-<html>
-    <head>
+{% extends "reports/base.html" %}
+
+    {% block head %}   
         <title>AAA</title>
+    {% endblock %}
+
+
         {% load bootstrap3 %}
 
         {# Load CSS and JavaScript #}
 
         {% bootstrap_css %}
         {% bootstrap_javascript %}
+
+        {% block stylesheets %}
         <style type="text/css">
         body {
           padding-top: 40px;
@@ -17,9 +22,9 @@
           background-color: #eee;
         }
         </style>
-    </head>
+    {% endblock %}
 
-    <body>
+    {% block content %} 
         <div class="container">
         <i class="icon-user"></i><h3>REGISTRATION PAGE</h3>
 
@@ -43,5 +48,5 @@
             <button type="submit" class="btn btn-success"> Register </button>
         </form>
         {% endif %}
-    </body>
-</html>
+    </div>
+    {% endblock %}

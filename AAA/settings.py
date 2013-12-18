@@ -214,3 +214,10 @@ SUIT_CONFIG = {
 
 
 }
+# Email setup
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'aaa.reports.news@gmail.com'
+DEFAULT_FROM_EMAIL = 'aaa.reports.news@gmail.com'
+EMAIL_HOST_PASSWORD = 'aaareports'
+EMAIL_PORT = 587

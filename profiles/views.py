@@ -6,7 +6,8 @@ from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from profiles.forms import ReportsUserForm, ReportsUser
-from datetime import datetime 
+from datetime import datetime
+from django.core.mail import send_mail 
 
 def index_login(request):
 	username = request.POST['username']
@@ -54,6 +55,14 @@ def employee_view(request):
 			report.status = form.data['status']
 			report.status_comment = form.data['status_comment']+" ("+str(datetime.now().date())+")" 
 			report.save()
+
+			message = "Update on your report:\n Comment: %s." %report.status_comment
+
+			send_mail('Report update', message, 'aaa.reports.news@gmail.com',
+    			[report.email], fail_silently=False)
+
+
+
 		else:
 			error = True
 
@@ -91,6 +100,10 @@ def register(request):
                         # Invalid form or forms - mistakes or something else?
                         # # Print problems to the terminal.
                         # # They'll also be shown to the user.
+                        # 
+                # send mail
+                send_mail('%s Thanks for registering ' %user.name, '%s,\n Thanks for registering in AAA reports application ' ,'aaa.reports.news@gmail.com',
+    			[user.email], fail_silently=False)
         else:
             print user_form.errors
 
