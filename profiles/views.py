@@ -58,7 +58,7 @@ def employee_view(request):
 
 			message = "Update on your report:\n Comment: %s." %report.status_comment
 
-			send_mail('Report update', message, 'aaa.reports.news@gmail.com',
+			send_mail('Report update' , message, 'aaa.reports.news@gmail.com',
     			[report.email], fail_silently=False)
 
 
@@ -102,7 +102,7 @@ def register(request):
                         # # They'll also be shown to the user.
                         # 
                 # send mail
-                send_mail('%s Thanks for registering ' %user.name, '%s,\n Thanks for registering in AAA reports application ' ,'aaa.reports.news@gmail.com',
+                send_mail('Thanks for your registration ', '%s,\n Thanks for registering in AAA reports application '%user.name ,'aaa.reports.news@gmail.com',
     			[user.email], fail_silently=False)
         else:
             print user_form.errors
