@@ -24,8 +24,8 @@ def create_rep(request):
 		report_form = ReportCreateForm(request.POST, request.FILES)
 
 		if report_form.is_valid():
-			print request.POST
-			report_form.photo_path = request.FILES['photo_path']
+			if request.FILES:
+				report_form.photo_path = request.FILES['photo_path']
 			report_form.save()
 			return render(request, 'reports/create_reports.html', context)
 		else :
@@ -33,7 +33,4 @@ def create_rep(request):
 			context = {'report_list' : report_list, 'form': form, 'error': error }
 			return render(request, 'reports/create_reports.html', context)
 	else :
-		return render(request, 'reports/create_reports.html', context)
-
-
-	
+		return render(request, 'reports/create_reports.html', context)	

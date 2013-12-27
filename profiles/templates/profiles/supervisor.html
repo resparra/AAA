@@ -5,26 +5,44 @@
 
  {% block stylesheets %}
   	<style type="text/css">
-			#Reports{ padding: 2%; }
+			#Reports{ 
+				padding: 3%;
+				height: 100%; 
+				width: 60%; 
+				float:right; 
+			}
+			#Assigned {
+				padding: 3%;
+				width: 40%; 
+				float: right; 
+				height: 100%;
+			}
+			.assrep { padding-left: 10%;}
 	</style>
  {% endblock %}
 
 {% block content %}
-	<div id="Reports">
-		<h3>SUPERVISOR : {{ user.name }} {{ user.last_name }}</h3>
+<h2> &nbsp;SUPERVISOR : {{ user.name }} {{ user.last_name }}</h2>
+<div id="Assigned">
+	<h3 style="text-align:center;"> Assigned Reports </h3><br>
+	{% for x in assign_list %}
+		<h4 class="assrep"> {{x.description}} : <h4 style="text-align:right;">{{x.assign_to}} </h4></h4>
 		<hr>
+	{% endfor %}
+</div> 
+<div id="Reports">
+		<h3 style="text-align:center;"> Unassign Reports </h3>
 		{% for x in report_list %}
 				<h3> {{x.description}} : {{x.date}} </h3>
-				<div style="width:300px;">
+				<div style="width:150%;">
 					<form method="post">
 						{% csrf_token %}
 						<input type='hidden' name="id" value="{{ x.id }}" />
-						{% bootstrap_form form layout="inline" %}
+						{% bootstrap_form form layout="horizontal" %}
            			     <button type="submit" class="btn btn-success">Assign</button>
 					</form>
 				</div>
 				<hr>
 		{% endfor %}
-	</div>
-
+</div>
 {% endblock %}

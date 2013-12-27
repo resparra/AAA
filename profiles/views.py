@@ -41,7 +41,8 @@ def supervisor_view(request):
 
 	form = AssignForm()
 	report_list = Report.objects.filter(assign_to__isnull=True).order_by('-id')
-	context = {'report_list' : report_list, 'form' : form }
+	assign_list = Report.objects.filter(assign_to__isnull=False).order_by('-id')
+	context = {'report_list' : report_list, 'assign_list' : assign_list , 'form' : form }
 
 	return render(request, 'profiles/supervisor.html', context)
 
@@ -68,13 +69,13 @@ def employee_view(request):
 
 	user = request.user
 	form = ReportForm()
-	report_list = Report.objects.filter(assign_to = user.id).order_by('-id')
-	report_completed = report_list.filter(status='C')
+	report_list = Report.objects.filter(assign_to = user.id).exclude(status='C').order_by('-id')
+	report_completed = Report.objects.filter(assign_to = user.id, status='C')
 	print report_completed
 	if error:
-		context = {'report_list' : report_list, 'form': form, 'error': error }
+		context = {'report_list' : report_list, 'report_completed': report_completed, 'form': form, 'error': error }
 	else:
-		context = {'report_list' : report_list, 'form': form }
+		context = {'report_list' : report_list, 'report_completed': report_completed, 'form': form }
 
 	return render(request, 'profiles/employee.html', context)
 

@@ -5,17 +5,36 @@
 
 {% block stylesheets %}
   	<style type="text/css">
-			#Reports{ padding: 2%; }
+			#Reports{ 
+				padding: 3%;
+				height: 100%; 
+				width: 60%; 
+				float:right; 
+			}
+			#Assigned {
+				padding: 3%;
+				width: 40%; 
+				float: right; 
+				height: 100%;
+			}
+			.assrep { padding-left: 10%;}
 	</style>
 {% endblock %}
 
 {% block content %}
+	<h3>&nbsp; {{ user.name }} {{user.last_name}}</h3>
 		{% if error %}
 			<p> Error : Blank Field </p>
 		{% endif %}
+		<div id="Assigned">
+			<h3 style="text-align:center;"> Completed Reports </h3><br>
+			{% for x in report_completed %}
+				<h4 class="assrep"> {{x.description}} : <h4 style="text-align:right;">{{x.status_comment}} </h4></h4>
+				<hr>
+			{% endfor %}
+		</div> 
 		<div id="Reports">
-			<h3>{{ user.name }} {{user.last_name}}</h3>
-			<hr>
+			<h3 style="text-align:center;"> Assigned Reports </h3>
 			{% for x in report_list %}
 			<div style="width:500px;">
 				<h3> {{x.description}} : {{x.date}} </h3>
