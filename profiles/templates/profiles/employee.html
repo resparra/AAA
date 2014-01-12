@@ -1,8 +1,5 @@
 {% extends "reports/base.html" %}
 {% load bootstrap3 %}
-{% bootstrap_css %}
-{% bootstrap_javascript %}
-
 {% block stylesheets %}
   	<style type="text/css">
 			#Reports{ 
@@ -13,11 +10,14 @@
 			}
 			#Assigned {
 				padding: 3%;
-				width: 40%; 
-				float: right; 
+				width: 40%;
+				float: right;
 				height: 100%;
 			}
 			.assrep { padding-left: 10%;}
+			a:link {color:#000;}      /* unvisited link */
+			a:hover {color:#0000FF;
+				text-decoration:none;}  /* mouse over link */
 	</style>
 {% endblock %}
 
@@ -27,26 +27,56 @@
 			<p> Error : Blank Field </p>
 		{% endif %}
 		<div id="Assigned">
-			<h3 style="text-align:center;"> Completed Reports </h3><br>
-			{% for x in report_completed %}
-				<h4 class="assrep"> {{x.description}} : <h4 style="text-align:right;">{{x.status_comment}} </h4></h4>
-				<hr>
-			{% endfor %}
+			<h3 style="text-align:center;"> Completed Reports </h3>
+			<div id="myAccordion" class="accordion">
+					{% for x in report_completed %}
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a href="#collapse{{x.id}}" data-parent="#myAccordion" data-toggle="collapse" class="accordion-toggle">
+								<h4>{{x.id}} : {{x.description}} ( {{x.date}} )</h4> 
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="collapse{{x.id}}">
+							<div class="accordion-inner">
+								<p>{{x.status}}  : {{x.status_comment}} </p>
+							</div>
+						</div>
+					</div>  
+					{% endfor %} 
+				</div> 
 		</div> 
 		<div id="Reports">
 			<h3 style="text-align:center;"> Assigned Reports </h3>
-			{% for x in report_list %}
-			<div style="width:500px;">
-				<h3> {{x.description}} : {{x.date}} </h3>
-				<p>{{x.status}}  : {{x.status_comment}} </p>
-				<form method="post">
-					{% csrf_token %}
-					<input type='hidden' name="id" value="{{ x.id }}" />
-					{% bootstrap_form form %}
-					<button type="submit" class="btn btn-success">Submit Change</button>
-				</form>
-				<hr>	
-			</div>			
-			{% endfor %}
-		</div>  
+
+			<div id="List">
+				<div id="myAccordion" class="accordion">
+					{% for x in report_list %}
+					<div class="accordion-group">
+						<div class="accordion-heading">
+							<a href="#collapse{{x.id}}" data-parent="#myAccordion" data-toggle="collapse" class="accordion-toggle">
+								<h3>{{x.id}} : {{x.description}} ( {{x.date}} )</h3> 
+							</a>
+						</div>
+						<div class="accordion-body collapse" id="collapse{{x.id}}">
+							<div class="accordion-inner">
+								<p>{{x.status}}  : {{x.status_comment}} </p>
+								<form method="post">
+									{% csrf_token %}
+									<input type='hidden' name="id" value="{{ x.id }}" />
+									{% bootstrap_form form %}
+									<button type="submit" class="btn btn-success">Submit Change</button>
+								</form>
+							</div>
+						</div>
+					</div>  
+					{% endfor %} 
+				</div> 
+			</div>
+
+
+		</div> 
+
+
+
+
 {% endblock %}

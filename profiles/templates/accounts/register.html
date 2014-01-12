@@ -38,14 +38,7 @@
 
             {% csrf_token %}
             {% bootstrap_form user_form %}
-
-
-            <!-- Display each form. The as.p method wraps each element in a paragraph
-                 (<p>) element. This ensures each element appears on a new line,
-                 making everything look neater. -->
-
-            <!-- Provide a button to click to submit the form. -->
-            <button type="submit" class="btn btn-success"> Register </button>
+            {% buttons submit='Register' reset="Cancel" %}{% endbuttons %}
         </form>
         {% endif %}
     </div>

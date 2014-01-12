@@ -5,20 +5,21 @@ from datetime import datetime
 
 class Report(models.Model):
 	REPORT_STATUS = (
-		('R', 'Reportado'),
-		('P', 'Procesando'),
-		('C', 'Completado'),
+		(u'R', u'Reportado'),
+		(u'P', u'Procesando'),
+		(u'C', u'Completado'),
 		)
 	REPORT_TYPES = (
-		('T', 'Tubo Roto'),
-		('F', 'Fuga de Agua'),
-		('E', 'Otros')
+		(u'A', u'Averia'),
+		(u'T', u'Tubo Roto'),
+		(u'F', u'Fuga de Agua'),
+		(u'E', u'Otros')
 		)
 	description = models.CharField(max_length=60)
 	date = models.DateField(default=datetime.now)
-	rep_type = models.CharField(max_length=1, choices= REPORT_TYPES)
-	status = models.CharField(max_length=1, choices= REPORT_STATUS)
-	status_comment = models.CharField(max_length=60)
+	rep_type = models.CharField(max_length=1, choices= REPORT_TYPES, default='A' )
+	status = models.CharField(max_length=1, choices= REPORT_STATUS, default='R')
+	status_comment = models.CharField(max_length=60, default='Reported')
 	latitude = models.FloatField()
 	longitude = models.FloatField()
 	count = models.IntegerField(default=1)

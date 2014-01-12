@@ -128,8 +128,6 @@
 			<form enctype="multipart/form-data" method="post">
             	{% csrf_token %}
             	{% bootstrap_form form layout="inline"%}
-            	<input type='hidden' id="id_status" name="status" value="R" />
-            	<input type='hidden' name="status_comment" value="Reported" />
            		<br> <button type="submit" class="btn btn-success"> Submit </button>
         	</form>
 		</div>
